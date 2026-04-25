@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bias Detection Tool</title>
+</head>
+<body>
+    <h1>Unbiased AI Checker</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Upload CSV:</label><br>
+        <input type="file" name="file" required><br><br>
+
+        <label>Target Column:</label><br>
+        <input type="text" name="target" required><br><br>
+
+        <label>Sensitive Column (e.g., gender):</label><br>
+        <input type="text" name="sensitive" required><br><br>
+
+        <button type="submit">Check Bias</button>
+    </form>
+
+    {% if result %}
+        <h2>Result:</h2>
+        <p>Status: {{ result.status }}</p>
+        <p>Bias Difference: {{ result.bias_difference }}</p>
+
+        <h3>Group Predictions:</h3>
+        <ul>
+        {% for key, value in result.items() %}
+            {% if key not in ['status', 'bias_difference'] %}
+                <li>{{ key }} : {{ value }}</li>
+            {% endif %}
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
